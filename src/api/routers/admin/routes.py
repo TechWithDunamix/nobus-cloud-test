@@ -9,15 +9,9 @@ from api.models.user import User
 from api.services.auth_service import AuthBearer
 from ._schemas import LoanStatusUpdate, AdminLogResponse
 from api.routers.loans._schemas import LoanApplicationResponse
-
+from api.services.auth_service import AdminAuth
 router = Router(tags=["Admin"])
 
-class AdminAuth(AuthBearer):
-    def authenticate(self, request, token):
-        user = super().authenticate(request, token)
-        if user and user.is_staff:
-            return user
-        return None
 
 @router.get("/loans", response=List[LoanApplicationResponse], auth=AdminAuth(), summary="List all loan applications")
 def list_all_loans(request):

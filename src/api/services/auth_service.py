@@ -13,3 +13,10 @@ class AuthBearer(HttpBearer):
             return None
         except Exception:
            return None
+
+class AdminAuth(AuthBearer):
+    def authenticate(self, request, token):
+        user = super().authenticate(request, token)
+        if user and user.is_staff:
+            return user
+        return None

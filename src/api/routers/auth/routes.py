@@ -58,3 +58,5 @@ def register(request : HttpRequest,register_request: Register):
     )
 
     return {"message": "Register successful"}
+
+``

@@ -48,7 +48,14 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-
+    def get_user_or_none(self, user_id: int) -> Optional["User"]:
+        """
+        Get a user by ID or return None if not found.
+        """
+        try:
+            return self.get(id=user_id)
+        except User.DoesNotExist:
+            return None
 class User(AbstractBaseUser, PermissionsMixin):
     """
     Custom User model that uses email instead of username.

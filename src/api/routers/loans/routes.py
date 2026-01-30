@@ -26,3 +26,11 @@ def list_loan_applications(request):
     List all loan applications for the authenticated user.
     """
     return LoanApplication.objects.filter(user=request.auth).all()
+
+@router.get("/{loan_id}", response=LoanApplicationResponse, auth=AuthBearer(), summary="Get loan application details")
+def get_loan_application(request, loan_id: int):
+    """
+    Get details of a specific loan application.
+    Only the owner can view it.
+    """
+    return LoanApplication.objects.get(id=loan_id, user=request.auth)

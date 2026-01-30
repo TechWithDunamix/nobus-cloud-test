@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr, Field, constr
 
 Username = constr(min_length=3, max_length=50)
-SecurePassword = constr(min_length=8)
+SecurePassword = constr(min_length=6)
 
 class Register(BaseModel):
     full_name: Username = Field(..., description="Your official full designation")

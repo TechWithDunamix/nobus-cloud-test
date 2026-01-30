@@ -72,6 +72,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     is_active: bool = models.BooleanField(default=True)
     is_staff: bool = models.BooleanField(default=False)
+    is_admin: bool = models.BooleanField(default=False)
+
 
     created_at: models.DateTimeField = models.DateTimeField(auto_now_add=True)
 

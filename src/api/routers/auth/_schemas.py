@@ -18,3 +18,8 @@ class TokenResponse(BaseModel):
 
 class RefreshTokenRequest(BaseModel):
     refresh: str = Field(..., description="Refresh Token to get new access token")
+
+class UserResponse(BaseModel):
+    id: int
+    email: EmailStr
+    full_name: str

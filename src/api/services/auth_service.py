@@ -5,9 +5,11 @@ from api.models.user import User
 class AuthBearer(HttpBearer):
     def authenticate(self, request, token):
         try:
-            payload = JWTService.decode_token(token)
+            payload = JWTService.validate_access_token(token)
             if payload:
-                user = User.get_user_or_none(payload["user_id"])
-                return user
-        except Exception as e:
+                user = User.objects.filter(id=payload["user_id"]).first()
+                if user and user.is_active:
+                    return user.to_dict
+            return None
+        except Exception:
            return None

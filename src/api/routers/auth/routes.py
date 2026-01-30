@@ -1,9 +1,19 @@
 from ninja.errors import HttpError
 from ._api  import router
-from ._schemas import Register, LoginRequest, TokenResponse, RefreshTokenRequest
+from ._schemas import Register, LoginRequest, TokenResponse, RefreshTokenRequest, UserResponse
 from django.http import HttpRequest
 from api.models.user import User
 from api.services import JWTService
+from api.services.auth_service import AuthBearer
+
+@router.get("/me",
+    summary="Get current user",
+    description="Get the currently authenticated user session.",
+    response=UserResponse,
+    auth=AuthBearer()
+    )
+def get_me(request):
+    return request.auth
 
 @router.post("/login",
     summary="Login a user",
@@ -59,4 +69,3 @@ def register(request : HttpRequest,register_request: Register):
 
     return {"message": "Register successful"}
 
-``

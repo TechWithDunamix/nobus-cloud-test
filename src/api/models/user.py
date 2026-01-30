@@ -83,3 +83,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self) -> str:
         """Return string representation of user."""
         return self.email
+
+    @property
+    def to_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "email": self.email,
+            "full_name": self.full_name,
+        }

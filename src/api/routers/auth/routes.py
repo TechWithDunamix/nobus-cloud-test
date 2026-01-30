@@ -13,7 +13,7 @@ from api.services.auth_service import AuthBearer
     auth=AuthBearer()
     )
 def get_me(request):
-    return request.auth
+    return request.auth.to_dict
 
 @router.post("/login",
     summary="Login a user",

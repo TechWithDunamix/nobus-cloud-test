@@ -9,7 +9,7 @@ class AuthBearer(HttpBearer):
             if payload:
                 user = User.objects.filter(id=payload["user_id"]).first()
                 if user and user.is_active:
-                    return user.to_dict
+                    return user
             return None
         except Exception:
            return None

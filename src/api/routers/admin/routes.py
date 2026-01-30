@@ -10,6 +10,7 @@ from api.services.auth_service import AuthBearer
 from ._schemas import LoanStatusUpdate, AdminLogResponse
 from api.routers.loans._schemas import LoanApplicationResponse
 from api.services.auth_service import AdminAuth
+from api.services.email_service import send_loan_approval_email
 router = Router(tags=["Admin"])
 
 
@@ -20,11 +21,13 @@ def list_all_loans(request):
     """
     return LoanApplication.objects.all().order_by('-created_at')
 
+
 @router.put("/loans/{loan_id}/status", response=LoanApplicationResponse, auth=AdminAuth(), summary="Approve or Reject a loan")
 def update_loan_status(request, loan_id: int, payload: LoanStatusUpdate):
     """
     Approve or Reject a loan application.
     This action is logged in AdminLog.
+    If Approved, an email is sent to the user.
     """
     with transaction.atomic():
         try:
@@ -37,6 +40,15 @@ def update_loan_status(request, loan_id: int, payload: LoanStatusUpdate):
             
         loan.status = payload.status
         loan.save()
+        
+        # Send Email if Approved
+        if payload.status == LoanStatus.APPROVED:
+            send_loan_approval_email(
+                user_email=loan.user.email,
+                user_name=loan.user.full_name,
+                amount=loan.amount,
+                tenure=loan.tenure_months
+            )
         
         # Audit Log
         AdminLog.objects.create(

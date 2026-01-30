@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
+from dotenv import load_dotenv
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -125,8 +126,19 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "api.User"
 
+import os
+
 # JWT Configuration
-JWT_SECRET_KEY = SECRET_KEY  # You can use a different key for JWT if needed
+JWT_SECRET_KEY = SECRET_KEY  
 JWT_ALGORITHM = "HS256"
-JWT_ACCESS_TOKEN_LIFETIME_MINUTES = 15  # 15 minutes
-JWT_REFRESH_TOKEN_LIFETIME_DAYS = 7  # 7 days
+JWT_ACCESS_TOKEN_LIFETIME_MINUTES = 120  
+JWT_REFRESH_TOKEN_LIFETIME_DAYS = 7  
+
+# Email Configuration
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = os.getenv("SMTP_SERVER", "smtp.zoho.com")
+EMAIL_PORT = int(os.getenv("SMTP_PORT", 587))
+EMAIL_HOST_USER = os.getenv("SMTP_USER")
+EMAIL_HOST_PASSWORD = os.getenv("SMTP_PASSWORD")
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "true").lower() == "true"
+DEFAULT_FROM_EMAIL = os.getenv("SMTP_FROM", EMAIL_HOST_USER)

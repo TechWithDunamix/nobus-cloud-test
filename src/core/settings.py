@@ -124,3 +124,9 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "api.User"
+
+# JWT Configuration
+JWT_SECRET_KEY = SECRET_KEY  # You can use a different key for JWT if needed
+JWT_ALGORITHM = "HS256"
+JWT_ACCESS_TOKEN_LIFETIME_MINUTES = 15  # 15 minutes
+JWT_REFRESH_TOKEN_LIFETIME_DAYS = 7  # 7 days

@@ -27,8 +27,7 @@ Key features include:
 - **JWT Authentication**: Secure, stateless authentication using Access and Refresh tokens.
 - **Role-Based Access**: Strict separation between User and Admin capabilities.
 - **Audit Logging**: Every administrative action (approval/rejection) is permanently logged in the database.
-- **Email Notifications**: Asynchronous email delivery to users upon loan approval.
-- **Scalable Architecture**: Built on Django and Django Ninja for high performance and easy maintenance.
+- **Email Notifications**: Email delivery to users upon loan approval.
 
 ## Technology Stack
 
@@ -138,6 +137,25 @@ EMAIL_DEFAULT_FROM=noreply@nobus.cloud
 
     The API will be available at `http://127.0.0.1:8000/api/`.
     The interactive docs are at `http://127.0.0.1:8000/api/docs`.
+
+### Using Docker (Alternative)
+
+You can also run the application using Docker and Docker Compose.
+
+1. **Build and Run**
+
+    ```bash
+    docker-compose up --build
+    ```
+
+    The API will be accessible at `http://localhost:8000/api/`.
+
+2. **Run Commands (e.g., migrations)**
+
+    ```bash
+    docker-compose exec web python src/manage.py migrate
+    docker-compose exec web python src/manage.py createsuperuser
+    ```
 
 ## API Reference
 

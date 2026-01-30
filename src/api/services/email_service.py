@@ -100,9 +100,9 @@ def send_loan_approval_email(user_email: str, user_name: str, amount: float, ten
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[user_email],
             html_message=html_message,
-            fail_silently=False,
+            fail_silently=True,  # Fail silently as requested
         )
         return True
-    except Exception as e:
-        print(f"Failed to send email: {e}")
+    except Exception:
+        # Silently ignore errors (e.g., SMTP not configured)
         return False

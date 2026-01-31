@@ -67,8 +67,8 @@ src/
 1. **Clone the Repository**
 
     ```bash
-    git clone <repository_url>
-    cd nobus-cloud-assignments
+    git clone https://github.com/TechWithDunamix/nobus-cloud-test
+    cd nobus-cloud-test
     ```
 
 2. **Initialize Virtual Environment**
